@@ -1,7 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+
+const userRoute = require("./routes/userRoute");
 const app = express();
+app.use(express.json());
 
 dotenv.config({ path: "./config.env" });
 
@@ -13,12 +16,7 @@ mongoose
   })
   .then(res => console.log("connected to mongo"));
 
-app.route("/").get((req, res) => {
-  res.send("Hello World");
-});
-app.route("/admin").get((req, res) => {
-  res.send("You are not an admin");
-});
+app.use("/api/v1/users", userRoute);
 
 const port = process.env.PORT || 3000;
 
